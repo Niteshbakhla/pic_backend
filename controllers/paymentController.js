@@ -72,8 +72,8 @@ exports.generateOrder = async (req, res) => {
                                                 },
                                     ],
                                     mode: 'payment',
-                                    success_url: `http://localhost:5173/success`,
-                                    cancel_url: 'http://localhost:5173/cancel',
+                                    success_url: `${process.env.frontend_api}/success`,
+                                    cancel_url: `${process.env.frontend_api}/cancel`,
                         });
 
                         newOrder.stripeSessionId = session.id;
