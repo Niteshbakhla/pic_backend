@@ -30,19 +30,7 @@ exports.generateOrder = async (req, res) => {
                                     image: post.image // Ensure price is in cents for Stripe
                         };
 
-                        const newOrder = new Order({
-                                    userId: purchaseId,
-                                    postId,
-                                    nameOfBuyer: user.username,
-                                    author: product.name,
-                                    title: post.title,
-                                    price: product.price,
-                                    stripeSessionId: "",
-                                    paymentStatus: "paid",
-                                    reciept: Crypto.randomBytes(10).toString("hex")
-                        });
-
-                        await newOrder.save();
+                     
 
 
 
@@ -77,6 +65,20 @@ exports.generateOrder = async (req, res) => {
                         });
 
                         newOrder.stripeSessionId = session.id;
+                        await newOrder.save();
+
+                           const newOrder = new Order({
+                                    userId: purchaseId,
+                                    postId,
+                                    nameOfBuyer: user.username,
+                                    author: product.name,
+                                    title: post.title,
+                                    price: product.price,
+                                    stripeSessionId: "",
+                                    paymentStatus: "paid",
+                                    reciept: Crypto.randomBytes(10).toString("hex")
+                        });
+
                         await newOrder.save();
 
                         return res.status(200).json({ success: true, id: session.id, posts, });
