@@ -31,20 +31,7 @@ exports.generateOrder = async (req, res) => {
                         };
 
                      
-                         
-                           const newOrder = new Order({
-                                    userId: purchaseId,
-                                    postId,
-                                    nameOfBuyer: user.username,
-                                    author: product.name,
-                                    title: post.title,
-                                    price: product.price,
-                                    stripeSessionId: "",
-                                    paymentStatus: "paid",
-                                    reciept: Crypto.randomBytes(10).toString("hex")
-                        });
-
-                        await newOrder.save();
+                        
 
 
                         await User.findByIdAndUpdate(purchaseId, {
@@ -73,13 +60,26 @@ exports.generateOrder = async (req, res) => {
                                                 },
                                     ],
                                     mode: 'payment',
-                                    success_url: `http://localhost:5173/success`,
-                                    cancel_url: `http://localhost:5173/cancel`,
+                                    success_url: `https://picprism-frontend.vercel.app/success`,
+                                    cancel_url: `https://picprism-frontend.vercel.app/cancel`,
                         });
 
 
 
+ 
+                           const newOrder = new Order({
+                                    userId: purchaseId,
+                                    postId,
+                                    nameOfBuyer: user.username,
+                                    author: product.name,
+                                    title: post.title,
+                                    price: product.price,
+                                    stripeSessionId: "",
+                                    paymentStatus: "paid",
+                                    reciept: Crypto.randomBytes(10).toString("hex")
+                        });
 
+                        await newOrder.save();
 
                         
                         newOrder.stripeSessionId = session.id;
