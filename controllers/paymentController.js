@@ -31,7 +31,8 @@ exports.generateOrder = async (req, res) => {
                         };
 
                      
-                          const newOrder = new Order({
+                         
+                           const newOrder = new Order({
                                     userId: purchaseId,
                                     postId,
                                     nameOfBuyer: user.username,
@@ -72,10 +73,15 @@ exports.generateOrder = async (req, res) => {
                                                 },
                                     ],
                                     mode: 'payment',
-                                    success_url: `${process.env.frontend_api}/success`,
-                                    cancel_url: `${process.env.frontend_api}/cancel`,
+                                    success_url: `http://localhost:5173/success`,
+                                    cancel_url: `http://localhost:5173/cancel`,
                         });
 
+
+
+
+
+                        
                         newOrder.stripeSessionId = session.id;
                         await newOrder.save();
 
